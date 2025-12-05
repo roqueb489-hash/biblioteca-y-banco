@@ -11,86 +11,70 @@
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <style>
-    :root {
-      --bg-dark: #0f172a; --surface: #1e293b; --text: #e2e8f0; --text-light: #94a3b8;
-      --azul-marino: #1e40af; --amarillo: #fbbf24; --rojo: #dc2626; --border: #334155;
-      --radius: 24px; --shadow: 0 15px 40px rgba(0,0,0,0.5);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; }
-    .menu-toggle { position: fixed; top: 20px; left: 20px; z-index: 1001; background: var(--azul-marino); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; visibility: hidden; transition: all 0.4s; z-index: 999; }
-    .overlay.active { opacity: 1; visibility: visible; }
-    .sidebar { position: fixed; left: -300px; top: 0; width: 300px; height: 100vh; background: linear-gradient(135deg, #0f172a, #1e293b); color: white; z-index: 1000; transition: left 0.4s ease; box-shadow: 5px 0 30px rgba(0,0,0,0.6); display: flex; flex-direction: column; }
-    .sidebar.active { left: 0; }
-    .sidebar-header { padding: 2rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .logo { width: 130px; border-radius: 50%; padding: 1rem; background: rgba(251,191,36,0.2); border: 4px solid var(--amarillo); margin: 0 auto 1rem; }
-    .sidebar h2 { font-size: 1.9rem; font-weight: 900; }
-    .nav a { display: block; padding: 1.2rem 2rem; color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; transition: all 0.3s; }
-    .nav a:hover { background: rgba(251,191,36,0.2); color: var(--amarillo); padding-left: 2.5rem; }
-    .nav a.volver { margin: 2rem; background: var(--rojo); border-radius: 20px; text-align: center; font-weight: 900; box-shadow: 0 10px 30px rgba(220,38,38,0.5); }
-    .hero { min-height: 100vh; background: linear-gradient(rgba(15,23,42,0.95), rgba(15,23,42,0.85)), url('https://images.unsplash.com/photo-1523050858586-39f6d5e6b870?w=1920') center/cover; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem; }
-    .hero h1 { font-size: clamp(3.8rem, 9vw, 8rem); font-weight: 900; color: var(--amarillo); }
-    .container { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem; }
-    .section-title { font-size: 3.2rem; font-weight: 900; color: var(--amarillo); margin: 6rem 0 4rem; position: relative; }
-    .section-title::after { content: ''; display: block; width: 150px; height: 8px; background: linear-gradient(90deg, var(--amarillo), var(--rojo)); margin: 1rem auto; border-radius: 4px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 3rem; justify-items: center; }
-    .card { width: 100%; max-width: 380px; background: var(--surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.4s; }
-    .card:hover { transform: translateY(-15px); }
-    .card-img-container { height: 220px; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .card-img-container canvas { max-width: 100%; max-height: 100%; }
-    .card-content { padding: 2rem; text-align: center; }
-    .badge { background: var(--azul-marino); color: white; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
-    .btns { display: flex; gap: 1rem; margin-top: 1rem; }
-    .btn { flex: 1; padding: 1rem; border-radius: 16px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
-    .btn-primary { background: var(--azul-marino); color: white; }
-    .btn-success { background: var(--amarillo); color: #000; }
-    .btn-danger { background: var(--rojo); color: white; }
-    .upload-box { text-align: center; background: var(--surface); border: 3px dashed var(--azul-marino); border-radius: var(--radius); padding: 4rem 2rem; margin: 7rem auto; max-width: 900px; box-shadow: var(--shadow); }
-    .btn-upload { background: linear-gradient(135deg, var(--azul-marino), var(--amarillo)); color: white; padding: 1.4rem 4rem; border: none; border-radius: 50px; font-size: 1.4rem; font-weight: 900; cursor: pointer; margin-top: 1.5rem; }
-    .modal { position: fixed; inset: 0; background: rgba(15,23,42,0.97); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 9999; }
-    .modal.active { display: flex; }
-    .modal-content { background: var(--surface); border-radius: var(--radius); padding: 3rem; max-width: 560px; width: 95%; text-align: center; box-shadow: var(--shadow); position: relative; }
-    .close { position: absolute; top: 1rem; right: 1.5rem; font-size: 2.8rem; cursor: pointer; color: var(--text-light); }
-    #examTitle { width: 100%; padding: 1.2rem; border-radius: 16px; border: none; background: #334155; color: white; font-size: 1.1rem; margin-bottom: 2rem; text-align: center; }
-    .file-input { display: block; background: #fef3c7; border: 3px dashed var(--azul-marino); border-radius: 20px; padding: 2.8rem 2rem; cursor: pointer; margin: 2rem auto; font-weight: 700; color: #000; font-size: 1.1rem; max-width: 420px; }
-    .progress { height: 16px; background: var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; display: none; }
-    .progress-bar { height: 100%; background: linear-gradient(90deg, var(--azul-marino), var(--amarillo)); width: 0%; transition: width 0.6s ease; }
-    .controls { position: fixed; top: 20px; right: 20px; z-index: 1001; display: flex; gap: 12px; }
-    .control-btn { background: var(--azul-marino); color: white; border: none; padding: 12px 16px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+    :root { --bg-dark:#0f172a; --surface:#1e293b; --text:#e2e8f0; --azul-marino:#1e40af; --amarillo:#fbbf24; --rojo:#dc2626; }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:var(--bg-dark);color:var(--text);min-height:100vh;}
+    .menu-toggle{position:fixed;top:20px;left:20px;z-index:1001;background:var(--azul-marino);color:white;border:none;width:60px;height:60px;border-radius:50%;font-size:1.8rem;cursor:pointer;}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);opacity:0;visibility:hidden;z-index:999;transition:all .4s;}
+    .overlay.active{opacity:1;visibility:visible;}
+    .sidebar{position:fixed;left:-300px;top:0;width:300px;height:100vh;background:linear-gradient(135deg,#0f172a,#1e293b);color:white;z-index:1000;transition:left .4s;display:flex;flex-direction:column;}
+    .sidebar.active{left:0;}
+    .hero{min-height:100vh;background:linear-gradient(rgba(15,23,42,.95),rgba(15,23,42,.85)),url('https://images.unsplash.com/photo-1523050858586-39f6d5e6b870?w=1920') center/cover;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem;}
+    .hero h1{font-size:clamp(3.8rem,9vw,8rem);color:var(--amarillo);font-weight:900;}
+    .container{max-width:1400px;margin:0 auto;padding:4rem 2rem;}
+    .section-title{font-size:3.2rem;color:var(--amarillo);margin:6rem 0 4rem;text-align:center;}
+    .section-title::after{content:'';display:block;width:150px;height:8px;background:linear-gradient(90deg,var(--amarillo),var(--rojo));margin:1rem auto;border-radius:4px;}
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:3rem;justify-items:center;}
+    .card{background:var(--surface);border-radius:24px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,.5);transition:.4s;}
+    .card:hover{transform:translateY(-15px);}
+    .card-img-container{height:220px;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .card-img-container canvas{max-width:100%;max-height:100%;}
+    .card-content{padding:2rem;text-align:center;}
+    .badge{background:var(--azul-marino);color:white;padding:.6rem 1.6rem;border-radius:50px;font-size:.85rem;display:inline-block;margin-bottom:1rem;}
+    .btns{display:flex;gap:1rem;margin-top:1rem;}
+    .btn{flex:1;padding:1rem;border-radius:16px;font-weight:700;text-decoration:none;}
+    .btn-primary{background:var(--azul-marino);color:white;}
+    .btn-success{background:var(--amarillo);color:#000;}
+    .btn-danger{background:var(--rojo);color:white;}
+    .upload-box{text-align:center;background:var(--surface);border:3px dashed var(--azul-marino);border-radius:24px;padding:4rem 2rem;margin:7rem auto;max-width:900px;}
+    .btn-upload{background:linear-gradient(135deg,var(--azul-marino),var(--amarillo));color:white;padding:1.4rem 4rem;border:none;border-radius:50px;font-size:1.4rem;font-weight:900;cursor:pointer;margin-top:1.5rem;}
+    .modal{position:fixed;inset:0;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);display:none;justify-content:center;align-items:center;z-index:9999;}
+    .modal.active{display:flex;}
+    .modal-content{background:var(--surface);border-radius:24px;padding:3rem;max-width:560px;width:95%;text-align:center;position:relative;}
+    .close{position:absolute;top:1rem;right:1.5rem;font-size:2.8rem;cursor:pointer;color:#94a3b8;}
+    #examTitle{width:100%;padding:1.2rem;border-radius:16px;border:none;background:#334155;color:white;font-size:1.1rem;margin-bottom:2rem;text-align:center;}
+    .file-input{display:block;background:#fef3c7;border:3px dashed var(--azul-marino);border-radius:20px;padding:2.8rem 2rem;cursor:pointer;margin:2rem auto;font-weight:700;color:#000;max-width:420px;}
+    .progress{height:16px;background:#334155;border-radius:8px;overflow:hidden;margin-top:1.5rem;display:none;}
+    .progress-bar{height:100%;background:linear-gradient(90deg,var(--azul-marino),var(--amarillo));width:0%;transition:width .6s;}
+    .control-btn{position:fixed;top:20px;right:20px;z-index:1001;background:var(--azul-marino);color:white;padding:12px 18px;border-radius:50px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.4);}
   </style>
 </head>
 <body>
 
-  <button class="menu-toggle" onclick="toggleMenu()">Menú</button>
+  <button class="menu-toggle" onclick="toggleMenu()">Menu</button>
   <div class="overlay" onclick="toggleMenu()"></div>
-
-  <div class="controls">
-    <button class="control-btn" onclick="document.getElementById('backup-modal').classList.add('active')">Respaldo</button>
-  </div>
+  <button class="control-btn" onclick="document.getElementById('backup-modal').classList.add('active')">Respaldo</button>
 
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <img src="Insignia-New-cuadrado.png" alt="Logo" class="logo" onerror="this.style.display='none'">
-      <h2>Banco de<br>Exámenes</h2>
+    <div style="padding:2rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.1);">
+      <img src="Insignia-New-cuadrado.png" alt="Logo" style="width:130px;border-radius:50%;border:4px solid var(--amarillo);background:rgba(251,191,36,.2);padding:1rem;margin-bottom:1rem;" onerror="this.style.display='none'">
+      <h2 style="font-size:1.9rem;font-weight:900;">Banco de<br>Exámenes</h2>
     </div>
-    <div class="nav-container">
-      <nav class="nav">
-        <a href="index.html" class="volver">Volver a Biblioteca</a>
-        <a href="#inicio">Inicio</a>
-        <a href="#area1">Área I</a>
-        <a href="#area2">Área II</a>
-        <a href="#area3">Área III</a>
-        <a href="#area4">Área IV</a>
-        <a href="#area5">Área V</a>
-        <a href="#area6">Concursos Interescolares</a>
-      </nav>
-    </div>
+    <nav style="flex:1;padding:1rem 0;">
+      <a href="index.html" style="display:block;padding:1.4rem 2rem;background:var(--rojo);color:white;margin:2rem;border-radius:20px;text-align:center;font-weight:900;">Volver a Biblioteca</a>
+      <a href="#inicio" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Inicio</a>
+      <a href="#area1" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Área I</a>
+      <a href="#area2" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Área II</a>
+      <a href="#area3" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Área III</a>
+      <a href="#area4" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Área IV</a>
+      <a href="#area5" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Área V</a>
+      <a href="#area6" style="display:block;padding:1.2rem 2rem;color:rgba(255,255,255,.9);">Concursos Interescolares</a>
+    </nav>
   </aside>
 
   <section class="hero" id="inicio">
     <h1>BANCO DE EXÁMENES</h1>
-    <p>Comparte y descarga exámenes organizados por áreas • Incluye Concursos Interescolares</p>
+    <p>Comparte y descarga exámenes organizados por áreas</p>
   </section>
 
   <div class="container" id="app"></div>
@@ -98,12 +82,12 @@
   <!-- Modal Subida -->
   <div class="modal" id="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal()">×</span>
+      <span class="close" onclick="this.closest('.modal').classList.remove('active')">×</span>
       <h3 id="modalTitle">Subir archivo</h3>
       <input type="text" id="examTitle" placeholder="Ej: Olimpiada Matemática 2025">
       <label class="file-input" for="fileInput">Máximo 140MB • Solo PDF</label>
       <input type="file" id="fileInput" accept=".pdf" style="display:none;">
-      <div id="fileInfo"></div>
+      <div id="fileInfo" style="color:var(--amarillo);margin:1rem 0;font-weight:700;"></div>
       <button id="uploadBtn" class="btn-upload">SUBIR ARCHIVO</button>
       <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
     </div>
@@ -114,11 +98,10 @@
     <div class="modal-content">
       <span class="close" onclick="this.closest('.modal').classList.remove('active')">×</span>
       <h3>Respaldo Completo</h3>
-      <p>Descarga todos los exámenes (incluidos PDFs) en un ZIP:</p>
-      <button class="btn-upload" onclick="exportarTodo()">Descargar ZIP</button>
-      <p style="margin-top:2rem;">O restaura uno anterior:</p>
-      <input type="file" id="restoreFile" accept=".zip" style="margin:1rem 0;">
-      <button class="btn-upload" onclick="restaurarTodo()">Restaurar ZIP</button>
+      <button class="btn-upload" onclick="exportarZIP()">Descargar ZIP con todos los PDFs</button>
+      <p style="margin:2rem 0;">O restaura un respaldo anterior:</p>
+      <input type="file" id="restoreFile" accept=".zip"><br><br>
+      <button class="btn-upload" onclick="restaurarZIP()">Restaurar desde ZIP</button>
     </div>
   </div>
 
@@ -126,128 +109,170 @@
     import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.mjs';
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.mjs';
 
-    const DB = 'examenes_sanluis_v2';
-    let examenes = JSON.parse(localStorage.getItem(DB)) || [];
+    const DB_NAME = 'examenes_sanluis';
+    const STORE_NAME = 'pdfs';
+    let db;
     const areas = ['area1','area2','area3','area4','area5','area6'];
     const nombres = ['Área I','Área II','Área III','Área IV','Área V','Concursos Interescolares'];
     let currentArea = '';
 
-    function guardar() { localStorage.setItem(DB, JSON.stringify(examenes)); }
-    function render() {
+    // === IndexedDB ===
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onupgradeneeded = e => {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, {keyPath: 'id'});
+      }
+    };
+    request.onsuccess = e => { db = e.target.result; cargarYRenderizar(); };
+    request.onerror = () => alert('Error con la base de datos local');
+
+    async function guardarExamen(examen) {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      tx.objectStore(STORE_NAME).put(examen);
+      await tx.done;
+    }
+
+    async function obtenerTodos() {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      return await store.getAll();
+    }
+
+    async function eliminarExamen(id) {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      tx.objectStore(STORE_NAME).delete(id);
+      await tx.done;
+    }
+
+    async function cargarYRenderizar() {
+      const examenes = await obtenerTodos();
+      examenes.sort((a,b) => b.fecha - a.fecha);
+      renderizar(examenes);
+    }
+
+    function renderizar(lista) {
       const app = document.getElementById('app');
       app.innerHTML = '';
       areas.forEach((area, i) => {
-        const lista = examenes.filter(e => e.area === area);
-        const section = document.createElement('div');
-        section.innerHTML = `
+        const filtrados = lista.filter(e => e.area === area);
+        const div = document.createElement('div');
+        div.innerHTML = `
           <h2 class="section-title" id="${area}">${nombres[i]}</h2>
           <div class="cards">
-            ${lista.length ? lista.map(ex => `
-              <div class="card" data-id="${ex.id}">
-                <div class="card-img-container"><canvas id="preview-${ex.id}"></canvas></div>
+            ${filtrados.length ? filtrados.map(ex => `
+              <div class="card">
+                <div class="card-img-container"><canvas id="prev-${ex.id}"></canvas></div>
                 <div class="card-content">
                   <div class="badge">${nombres[i]}</div>
                   <h3>${ex.titulo}</h3>
-                  <p>${ex.fecha}</p>
+                  <p>${new Date(ex.fecha).toLocaleString('es-PE')}</p>
                   <div class="btns">
-                    <a href="${ex.pdf}" target="_blank" class="btn btn-primary">Ver</a>
-                    <a href="${ex.pdf}" download="${ex.titulo}.pdf" class="btn btn-success">Descargar</a>
-                    <button onclick="eliminar('${ex.id}', this)" class="btn btn-danger">Eliminar</button>
+                    <a href="${ex.blobUrl}" target="_blank" class="btn btn-primary">Ver</a>
+                    <a href="${ex.blobUrl}" download="${ex.titulo}.pdf" class="btn btn-success">Descargar</a>
+                    <button onclick="eliminar('${ex.id}')" class="btn btn-danger">Eliminar</button>
                   </div>
                 </div>
               </div>
-            `).join('') : '<p class="empty">Aún no hay archivos en esta sección</p>'}
+            `).join('') : '<p style="grid-column:1/-1;text-align:center;padding:4rem;color:#94a3b8;">Aún no hay exámenes aquí</p>'}
           </div>
           <div class="upload-box">
-            <h3>¿Tienes archivos de ${nombres[i]}?</h3>
-            <p>Sube y ayuda a tus compañeros</p>
+            <h3>¿Tienes exámenes de ${nombres[i]}?</h3>
             <button class="btn-upload" onclick="openModal('${area}')">SUBIR AHORA</button>
           </div>`;
-        app.appendChild(section);
-        lista.forEach(ex => renderPreview(ex.pdf, `preview-${ex.id}`));
+        app.appendChild(div);
+        filtrados.forEach(ex => renderPreview(ex.blobUrl, `prev-${ex.id}`));
       });
-      gsap.from('.card', { y: 70, opacity: 0, stagger: 0.12, duration: 0.8, ease: "back.out(1.5)" });
+      gsap.from('.card', {y:70, opacity:0, stagger:0.1, duration:0.8});
     }
 
     function renderPreview(url, canvasId) {
       const canvas = document.getElementById(canvasId);
       if (!canvas) return;
       pdfjsLib.getDocument(url).promise.then(pdf => pdf.getPage(1)).then(page => {
-        const viewport = page.getViewport({ scale: 1.5 });
+        const viewport = page.getViewport({scale:1.5});
         canvas.height = viewport.height; canvas.width = viewport.width;
-        page.render({ canvasContext: canvas.getContext('2d'), viewport });
-      }).catch(() => { canvas.parentElement.innerHTML = '<div style="color:#666;padding:2rem;">Preview no disponible</div>'; });
+        page.render({canvasContext: canvas.getContext('2d'), viewport});
+      }).catch(() => {});
     }
 
     window.openModal = area => {
       currentArea = area;
-      const nombre = area === 'area6' ? 'Concursos Interescolares' : 'Área ' + area.replace('area','');
-      document.getElementById('modalTitle').textContent = `Subir a ${nombre}`;
+      document.getElementById('modalTitle').textContent = `Subir a ${area==='area6'?'Concursos':area.replace('area','Área ')}`;
       document.getElementById('modal').classList.add('active');
     };
-    window.closeModal = () => document.getElementById('modal').classList.remove('active');
 
-    document.getElementById('fileInput').addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (file) document.getElementById('fileInfo').textContent = `${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`;
-    });
+    document.getElementById('fileInput').onchange = e => {
+      const f = e.target.files[0];
+      if (f) document.getElementById('fileInfo').textContent = `${f.name} (${(f.size/1024/1024).toFixed(1)} MB)`;
+    };
 
     document.getElementById('uploadBtn').onclick = () => {
       const titulo = document.getElementById('examTitle').value.trim();
       const file = document.getElementById('fileInput').files[0];
-      if (!titulo || !file || file.size > 140*1024*1024 || file.type !== 'application/pdf') {
-        alert('Completa título y selecciona un PDF válido (máx 140 MB)');
-        return;
-      }
+      if (!titulo || !file || file.size > 140*1024*1024) return alert('Faltan datos o PDF muy grande');
+      
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = async e => {
+        const blob = new Blob([e.target.result], {type: 'application/pdf'});
+        const blobUrl = URL.createObjectURL(blob);
         const nuevo = {
-          id: 'exam_' + Date.now(),
+          id: 'ex_' + Date.now(),
           titulo,
-          pdf: e.target.result,
+          blobUrl,
           area: currentArea,
-          fecha: new Date().toLocaleDateString('es-ES') + ' ' + new Date().toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'})
+          fecha: Date.now()
         };
-        examenes.unshift(nuevo);
-        guardar();
-        render();
-        closeModal();
+        await guardarExamen(nuevo);
+        cargarYRenderizar();
+        document.getElementById('modal').classList.remove('active');
         alert('¡Examen subido con éxito!');
       };
-      reader.readAsDataURL(file);
+      reader.readAsArrayBuffer(file);
     };
 
-    window.eliminar = (id, btn) => {
-      if (!confirm('¿Eliminar permanentemente?')) return;
-      examenes = examenes.filter(e => e.id !== id);
-      guardar();
-      gsap.to(btn.closest('.card'), { y: -60, opacity: 0, duration: 0.6, onComplete: () => render() });
+    window.eliminar = async id => {
+      if (confirm('¿Eliminar este examen?')) {
+        await eliminarExamen(id);
+        cargarYRenderizar();
+      }
     };
 
-    window.exportarTodo = async () => {
+    window.exportarZIP = async () => {
       const zip = new JSZip();
-      examenes.forEach(ex => {
-        const base64 = ex.pdf.split(',')[1];
-        zip.file(`${ex.titulo}.pdf`, base64, {base64: true});
-      });
-      zip.file('data.json', JSON.stringify(examenes));
+      const examenes = await obtenerTodos();
+      for (const ex of examenes) {
+        const response = await fetch(ex.blobUrl);
+        const blob = await response.blob();
+        zip.file(`${ex.titulo}.pdf`, blob);
+      }
       const content = await zip.generateAsync({type:'blob'});
-      saveAs(content, `respaldo-examenes-sanluis-${new Date().toISOString().slice(0,10)}.zip`);
+      saveAs(content, `respaldo-examenes-${new Date().toISOString().slice(0,10)}.zip`);
     };
 
-    window.restaurarTodo = () => {
+    window.restaurarZIP = () => {
       const file = document.getElementById('restoreFile').files[0];
       if (!file) return alert('Selecciona un ZIP');
       const reader = new FileReader();
-      reader.onload = e => JSZip.loadAsync(e.target.result).then(zip => {
-        zip.file('data.json').async('string').then(json => {
-          examenes = JSON.parse(json);
-          guardar();
-          render();
-          alert('¡Respaldo restaurado con éxito!');
-          document.getElementById('backup-modal').classList.remove('active');
-        });
-      });
+      reader.onload = async e => {
+        const zip = await JSZip.loadAsync(e.target.result);
+        for (const filename of Object.keys(zip.files)) {
+          if (filename.endsWith('.pdf')) {
+            const blob = await zip.file(filename).async('blob');
+            const blobUrl = URL.createObjectURL(blob);
+            const nuevo = {
+              id: 'ex_' + Date.now() + Math.random(),
+              titulo: filename.replace('.pdf',''),
+              blobUrl,
+              area: 'area1', // puedes mejorar esto si guardas el área
+              fecha: Date [
+            };
+            await guardarExamen(nuevo);
+          }
+        }
+        cargarYRenderizar();
+        alert('Respaldo restaurado');
+      };
       reader.readAsArrayBuffer(file);
     };
 
@@ -256,7 +281,8 @@
       document.querySelector('.overlay').classList.toggle('active');
     };
 
-    render();
+    // Cerrar modales al hacer clic fuera
+    window.onclick = e => { if (e.target.classList.contains('modal')) e.target.classList.remove('active'); };
   </script>
 </body>
 </html>
