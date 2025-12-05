@@ -11,7 +11,7 @@
   <style>
     :root {
       --primary: #003087;
-      --secondary: #0146c6ff;
+      --secondary: #0146c6;
       --accent: #FFD700;
       --light: #f8f9fa;
       --dark: #1e293b;
@@ -23,127 +23,123 @@
       --card-shadow-hover: 0 25px 50px rgba(0,48,135,0.22);
       --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       --radius: 20px;
-      --radius-sm: 14px;
     }
 
     [data-theme="dark"] {
       --light: #0f172a;
-      --dark: #000000ff;
+      --dark: #f1f5f9;
       --gray: #94a3b8;
       --gray-light: #334155;
       --card-shadow: 0 8px 25px rgba(0,48,135,0.35);
       --card-shadow-hover: 0 30px 60px rgba(0,48,135,0.5);
     }
 
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--light);
       color: var(--dark);
       line-height: 1.6;
       transition: var(--transition);
-      overflow-x: hidden;
       padding-left: 280px;
+      min-height: 100vh;
     }
+    .sidebar { position: fixed; left: 0; top: 0; width: 280px; height: 100vh; background: linear-gradient(180deg, var(--primary), var(--secondary)); color: white; z-index: 999; display: flex; flex-direction: column; box-shadow: 8px 0 30px rgba(0,48,135,0.3); overflow-y: auto; transition: 0.4s; }
+    .sidebar.active { transform: translateX(0); }
+    @media (max-width: 992px) { body { padding-left: 0; } .sidebar { transform: translateX(-100%); } }
 
-    /* Sidebar, hero, cards, etc. (todo igual que antes) */
-    .sidebar { position: fixed; left: 0; top: 0; width: 280px; height: 100vh; background: linear-gradient(180deg, var(--primary), var(--secondary)); color: white; z-index: 999; display: flex; flex-direction: column; box-shadow: 8px 0 30px rgba(0,48,135,0.3); overflow-y: auto; }
+    .menu-toggle { display: none; position: fixed; top: 20px; left: 20px; z-index: 1002; background: var(--primary); color: white; border: none; width: 62px; height: 62px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; box-shadow: 0 8px 25px rgba(0,48,135,0.5); }
+    @media (max-width: 992px) { .menu-toggle { display: block; } }
+
     .sidebar-header { padding: 2.8rem 1.5rem 2.2rem; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.15); }
-    .sidebar-logo-big { width: 158px; height: auto; max-width: 80%; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)); margin-bottom: 16px; border-radius: 22px; background: rgba(255,255,255,0.18); padding: 14px; backdrop-filter: blur(6px); }
-    .sidebar-header h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; margin: 0; line-height: 1.2; }
-    .sidebar-header span { font-size: 1.35rem; opacity: 0.95; }
-    .sidebar-nav { flex: 1; padding: 1.8rem 0; }
-    .nav-item { display: flex; align-items: center; gap: 16px; padding: 1.1rem 2rem; color: rgba(255,255,255,0.92); text-decoration: none; font-weight: 500; transition: all 0.35s; position: relative; }
-    .nav-item i { font-size: 1.35rem; width: 30px; }
+    .sidebar-logo-big { width: 158px; border-radius: 22px; background: rgba(255,255,255,0.18); padding: 14px; backdrop-filter: blur(6px); }
+    .sidebar-header h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; }
+
+    .nav-item { display: flex; align-items: center; gap: 16px; padding: 1.1rem 2rem; color: rgba(255,255,255,0.92); text-decoration: none; font-weight: 500; transition: all 0.35s; }
     .nav-item:hover { background: rgba(255,255,255,0.18); padding-left: 2.4rem; }
     .nav-item.active { background: rgba(255,255,255,0.28); font-weight: 700; border-left: 6px solid var(--accent); padding-left: 2.4rem; }
 
     .hero { height: 100vh; min-height: 620px; background: linear-gradient(rgba(0,48,135,0.95), rgba(0,48,135,0.88)), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1920') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
-    .hero-content { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-    .hero-logo-big { width: 190px; filter: drop-shadow(0 10px 25px rgba(0,0,0,0.7)); margin-bottom: -8px; }
-    .hero-content h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 5.8rem); margin: 0; text-shadow: 0 8px 20px rgba(0,0,0,0.6); font-weight: 900; }
+    .hero-content h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 8vw, 5.8rem); text-shadow: 0 8px 20px rgba(0,0,0,0.6); font-weight: 900; }
+
     .search-bar input { padding: 18px 30px; width: 100%; max-width: 600px; border: none; border-radius: 50px; font-size: 1.15rem; box-shadow: 0 15px 40px rgba(0,48,135,0.5); outline: none; }
 
     .container { max-width: 1400px; margin: 0 auto; padding: 0 30px; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.8rem; padding: 2rem 0; }
-    .card { background: white; border-radius: 20px; overflow: hidden; box-shadow: var(--card-shadow); transition: all 0.45s ease; position: relative; border: 3px solid var(--accent); opacity: 0; transform: translateY(35px); }
-    .card.visible { opacity: 1; transform: translateY(0); }
+    .stats { display: flex; justify-content: center; gap: 3rem; margin: 3rem 0; flex-wrap: wrap; }
+    .stat-item h3 { font-size: 2.5rem; color: var(--primary); }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; padding: 2rem 0; }
+    .card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--card-shadow); transition: var(--transition); position: relative; border: 3px solid var(--accent); }
     .card:hover { transform: translateY(-14px); box-shadow: var(--card-shadow-hover); }
-    .card img { width: 100%; height: 170px; object-fit: cover; transition: transform 0.6s ease; }
-    .card:hover img { transform: scale(1.08); }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card .content { padding: 1.4rem; }
+    .category-badge { background: var(--primary); color: white; padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.8rem; display: inline-block; margin-bottom: 0.8rem; }
+
+    .favorite-btn { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.9); width: 42px; height: 42px; border-radius: 50%; border: none; font-size: 1.3rem; cursor: pointer; z-index: 10; }
+    .favorite-btn.active { background: #ef4444; color: white; }
 
     .add-book-card {
       background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      border-radius: var(--radius);
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      box-shadow: var(--card-shadow);
-      transition: var(--transition);
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      min-height: 420px;
-      opacity: 0;
-      transform: translateY(35px);
+      color: white; border-radius: var(--radius); padding: 3rem 1.5rem; text-align: center; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
+      min-height: 380px; border: 4px dashed rgba(255,255,255,0.5);
     }
-    .add-book-card:hover { transform: translateY(-16px); box-shadow: var(--card-shadow-hover); }
-    .add-book-card i { font-size: 5.5rem; opacity: 0.95; color: white; }
-    .add-book-card span { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 900; line-height: 1.2; }
-    .add-book-card small { font-size: 1.05rem; opacity: 0.9; }
+    .add-book-card i { font-size: 6rem; }
+    .add-book-card span { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; }
 
-    .upload-modal, .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(12px); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
-    .upload-modal.active, .modal.active { display: flex; }
-    .upload-box { background: white; border-radius: 24px; width: 96%; max-width: 560px; padding: 2.8rem 2.2rem; box-shadow: 0 30px 80px rgba(0,48,135,0.4); position: relative; max-height: 90vh; overflow-y: auto; }
+    .upload-modal, .modal, .backup-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.94); backdrop-filter: blur(12px); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
+    .upload-modal.active, .modal.active, .backup-modal.active { display: flex; }
+    .upload-box, .modal-box { background: white; border-radius: 24px; width: 96%; max-width: 560px; padding: 3rem 2.5rem; box-shadow: 0 30px 80px rgba(0,48,135,0.4); position: relative; color: #333; }
+    .close-upload, .close-modal { position: absolute; top: 18px; right: 22px; font-size: 2rem; cursor: pointer; background: none; border: none; color: #999; }
 
     #scrollTop { position: fixed; bottom: 30px; right: 30px; width: 58px; height: 58px; background: var(--primary); color: white; border: none; border-radius: 50%; font-size: 1.7rem; cursor: pointer; box-shadow: 0 8px 25px rgba(0,48,135,0.4); opacity: 0; visibility: hidden; transition: var(--transition); z-index: 998; }
     #scrollTop.visible { opacity: 1; visibility: visible; }
 
-    @media (max-width: 992px) { body { padding-left: 0; } .sidebar { transform: translateX(-100%); } .sidebar.active { transform: translateX(0); } }
-    .menu-toggle { display: none; position: fixed; top: 20px; left: 20px; z-index: 1002; background: var(--primary); color: white; border: none; width: 62px; height: 62px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; box-shadow: 0 8px 25px rgba(0,48,135,0.5); }
-    @media (max-width: 992px) { .menu-toggle { display: block; } }
+    .controls { position: fixed; top: 20px; right: 20px; z-index: 1001; display: flex; gap: 12px; }
+    .control-btn { background: var(--primary); color: white; border: none; padding: 12px 16px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(0,48,135,0.3); }
+
+    .pdf-viewer { width: 100%; max-width: 900px; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .pdf-controls { background: var(--primary); color: white; padding: 1rem; text-align: center; display: flex; justify-content: center; gap: 1rem; align-items: center; }
+    .pdf-canvas { width: 100%; border: none; }
   </style>
 </head>
 <body data-theme="light">
 
-  <button class="menu-toggle" id="menu-toggle">Menú</button>
+  <button class="menu-toggle" id="menu-toggle">☰</button>
 
-  <!-- Sidebar igual -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <img src="Insignia-New-cuadrado.png" alt="IEP San Luis Gonzaga" class="sidebar-logo-big" onerror="this.style.display='none'">
+      <img src="Insignia-New-cuadrado.png" alt="Logo" class="sidebar-logo-big" onerror="this.style.display='none'">
       <h2>Biblioteca<br><span>Sanluisina</span></h2>
     </div>
     <nav class="sidebar-nav">
-      <a href="examenes.html" class="nav-item">Banco de Exámenes</a>
-    </nav>
-    <div class="sidebar-footer">
       <a href="#" class="nav-item active" data-section="all">Todos los libros</a>
       <a href="#" class="nav-item" data-section="wol">Publicaciones Bíblicas</a>
       <a href="#" class="nav-item" data-section="peru">Literatura Peruana</a>
       <a href="#" class="nav-item" data-section="huanuco">Huánuco</a>
       <a href="#" class="nav-item" data-section="creencias-peru">Creencias</a>
-      <p>IEP San Luis Gonzaga<br><strong>Huánuco</strong></p>
+      <a href="examenes.html" class="nav-item">Banco de Exámenes</a>
+    </nav>
+    <div style="padding: 2rem; text-align: center; font-size: 0.9rem; opacity: 0.9;">
+      IEP San Luis Gonzaga<br><strong>Huánuco</strong>
     </div>
   </aside>
 
   <div class="controls">
-    <button class="control-btn" id="theme-toggle">Luna</button>
-    <button class="control-btn" id="favorites-btn">Corazón <span id="fav-count">0</span></button>
+    <button class="control-btn" id="backup-btn">💾 Respaldo</button>
+    <button class="control-btn" id="theme-toggle">🌙</button>
+    <button class="control-btn" id="favorites-btn">❤️ <span id="fav-count">0</span></button>
   </div>
 
-  <button id="scrollTop">Arriba</button>
+  <button id="scrollTop">↑</button>
 
   <section class="hero">
     <div class="hero-content">
-      <img src="Insignia-New-cuadrado.png" alt="IEP San Luis Gonzaga" class="hero-logo-big" onerror="this.style.display='none'">
+      <img src="Insignia-New-cuadrado.png" alt="Logo" class="hero-logo-big" onerror="this.style.display='none'">
       <h1>Biblioteca Digital Sanluisina</h1>
       <p>IEP San Luis Gonzaga - Huánuco</p>
       <div class="search-bar">
-        <input type="text" id="global-search" placeholder="Busca por título o autor"/>
+        <input type="text" id="global-search" placeholder="Buscar por título, autor o categoría..."/>
       </div>
     </div>
   </section>
@@ -158,16 +154,16 @@
     <div class="cards" id="all-container"></div>
   </div>
 
-  <!-- Modal subir libro -->
+  <!-- Modal Subir Libro -->
   <div class="upload-modal" id="upload-modal">
     <div class="upload-box">
       <button class="close-upload">×</button>
       <h2>Subir Nuevo Libro</h2>
       <form id="upload-form">
-        <div class="form-group"><label>Título *</label><input type="text" id="titulo" required></div>
-        <div class="form-group"><label>Autor *</label><input type="text" id="autor" required></div>
-        <div class="form-group"><label>Año *</label><input type="number" id="año" min="1500" max="2030" required></div>
-        <div class="form-group"><label>Categoría *</label>
+        <div class="form-group" style="margin-bottom:1.2rem;"><label>Título *</label><input type="text" id="titulo" required></div>
+        <div class="form-group" style="margin-bottom:1.2rem;"><label>Autor *</label><input type="text" id="autor" required></div>
+        <div class="form-group" style="margin-bottom:1.2rem;"><label>Año *</label><input type="number" id="año" min="1500" max="2030" required></div>
+        <div class="form-group" style="margin-bottom:1.2rem;"><label>Categoría *</label>
           <select id="categoria" required>
             <option value="wol">Publicaciones Bíblicas</option>
             <option value="peru">Literatura Peruana</option>
@@ -176,11 +172,41 @@
             <option value="creencias-huanuco">Creencias Huanuqueñas</option>
           </select>
         </div>
-        <div class="form-group"><label>Cita corta</label><textarea id="quote"></textarea></div>
-        <div class="form-group"><label>Portada *</label><input type="file" id="portada" accept="image/*" required></div>
-        <div class="form-group"><label>PDF *</label><input type="file" id="pdf" accept=".pdf" required></div>
-        <button type="submit" class="upload-btn">Subir Libro</button>
+        <div class="form-group" style="margin-bottom:1.2rem;"><label>Cita corta (opcional)</label><textarea id="quote" rows="2"></textarea></div>
+        <div class="form-group" style="margin-bottom:1.2rem;"><label>Portada *</label><input type="file" id="portada" accept="image/*" required></div>
+        <div class="form-group" style="margin-bottom:1.8rem;"><label>PDF *</label><input type="file" id="pdf" accept=".pdf" required></div>
+        <button type="submit" style="width:100%; padding:1rem; background:var(--primary); color:white; border:none; border-radius:50px; font-size:1.1rem; cursor:pointer;">Subir Libro</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal Visor PDF -->
+  <div class="modal" id="pdf-modal">
+    <div class="pdf-viewer">
+      <div class="pdf-controls">
+        <button id="prev-page">◀</button>
+        <span>Página <span id="page-num">1</span> de <span id="page-count">1</span></span>
+        <button id="next-page">▶</button>
+        <button id="zoom-out">−</button>
+        <button id="zoom-in">+</button>
+        <button class="close-modal" style="margin-left:auto; background:none; font-size:1.5rem;">×</button>
+      </div>
+      <canvas id="pdf-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Modal Respaldo -->
+  <div class="backup-modal" id="backup-modal">
+    <div class="modal-box">
+      <button class="close-modal">×</button>
+      <h2>Respaldo de la Biblioteca</h2>
+      <p>Guarda todos tus libros subidos para siempre:</p>
+      <button style="margin:1rem 0; padding:1rem; width:100%; background:#10b981; color:white; border:none; border-radius:12px; font-size:1.1rem; cursor:pointer;" onclick="exportarRespaldo()">
+        📥 Descargar respaldo (.json)
+      </button>
+      <p>o restaura uno anterior:</p>
+      <input type="file" id="import-file" accept=".json" style="margin-bottom:1rem;">
+      <button style="padding:1rem; width:100%; background:var(--primary); color:white; border:none; border-radius:12px; font-size:1.1rem; cursor:pointer;" onclick="importarRespaldo()">Restaurar desde archivo</button>
     </div>
   </div>
 
@@ -189,12 +215,12 @@
     import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.mjs';
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.min.mjs';
 
-    const DB = 'biblioteca_sanluis';
+    const DB = 'biblioteca_sanluis_v2';
     let libros = JSON.parse(localStorage.getItem(DB)) || [];
     let favoritos = JSON.parse(localStorage.getItem(DB + '_fav') || '[]');
     let lecturas = parseInt(localStorage.getItem(DB + '_read') || '0');
 
-    const subCatNames = { wol: 'Publicaciones WOL', peru: 'Literatura Peruana', huanuco: 'Literatura Huanuqueña', 'creencias-peru': 'Creencias Peruanas', 'creencias-huanuco': 'Creencias Huanuqueñas' };
+    const categorias = { wol: 'Publicaciones Bíblicas', peru: 'Literatura Peruana', huanuco: 'Literatura Huanuqueña', 'creencias-peru': 'Creencias Peruanas', 'creencias-huanuco': 'Creencias Huanuqueñas' };
 
     function guardar() {
       localStorage.setItem(DB, JSON.stringify(libros));
@@ -204,20 +230,21 @@
 
     function crearTarjeta(l) {
       const fav = favoritos.includes(l.id);
-      return `<div class="card" data-id="${l.id}">
-        <button class="favorite-btn ${fav?'active':''}">Corazón</button>
-        <img src="${l.img}" alt="${l.titulo}" loading="lazy">
-        <div class="content">
-          <div class="category-badge">${subCatNames[l.categoria] || l.categoria}</div>
-          <h3>${l.titulo}</h3>
-          <p>${l.autor} • ${l.año}</p>
-          <p>"${l.quote}"</p>
-          <div class="action-buttons">
-            <button class="read-btn" data-pdf="${l.pdf}">Leer ahora</button>
-            <a href="${l.pdf}" download class="download-btn">Descargar PDF</a>
+      return `
+        <div class="card visible" data-id="${l.id}" data-category="${l.categoria}">
+          <button class="favorite-btn ${fav?'active':''}" onclick="toggleFavorito('${l.id}')">❤️</button>
+          <img src="${l.img}" alt="${l.titulo}" loading="lazy">
+          <div class="content">
+            <div class="category-badge">${categorias[l.categoria] || l.categoria}</div>
+            <h3>${l.titulo}</h3>
+            <p>${l.autor} • ${l.año}</p>
+            <p style="font-style:italic; opacity:0.8; margin:0.8rem 0;">"${l.quote || 'Sin descripción'}"}</p>
+            <div class="action-buttons" style="display:flex; gap:0.8rem; margin-top:1rem;">
+              <button class="read-btn" onclick="abrirPDF('${l.pdf}')">Leer ahora</button>
+              <a href="${l.pdf}" download class="download-btn" style="background:#10b981; color:white; padding:0.6rem 1rem; border-radius:50px; text-decoration:none; font-size:0.9rem;">⬇ Descargar</a>
+            </div>
           </div>
-        </div>
-      </div>`;
+        </div>`;
     }
 
     function renderizar(filtrados = libros) {
@@ -226,18 +253,19 @@
       html += `<div class="add-book-card" onclick="document.getElementById('upload-modal').classList.add('active')">
         <i class="fas fa-cloud-upload-alt"></i>
         <span>Subir nuevo<br>libro</span>
-        <small>Haz clic para agregar a la biblioteca</small>
+        <small>¡Contribuye a la biblioteca!</small>
       </div>`;
-      cont.innerHTML = html || '<p style="grid-column:1/-1;text-align:center;padding:5rem;">No hay libros aún</p>';
+      cont.innerHTML = html || '<p style="grid-column:1/-1; text-align:center; padding:6rem; font-size:1.4rem; opacity:0.6;">Aún no hay libros. ¡Sé el primero en subir uno!</p>';
 
       document.getElementById('total-books').textContent = libros.length;
       document.getElementById('total-authors').textContent = [...new Set(libros.map(l=>l.autor))].length;
       document.getElementById('read-count').textContent = lecturas;
       document.getElementById('fav-count').textContent = favoritos.length;
 
-      gsap.fromTo('.card, .add-book-card', {y:50, opacity:0}, {y:0, opacity:1, stagger:0.1, duration:0.7});
+      gsap.fromTo('.card, .add-book-card', {y: 60, opacity: 0}, {y: 0, opacity: 1, stagger: 0.08, duration: 0.8, ease: "back.out(1.4)"});
     }
 
+    // === SUBIR LIBRO ===
     document.getElementById('upload-form').onsubmit = e => {
       e.preventDefault();
       const titulo = document.getElementById('titulo').value.trim();
@@ -248,34 +276,159 @@
       const portada = document.getElementById('portada').files[0];
       const pdf = document.getElementById('pdf').files[0];
 
-      if (!titulo || !autor || !año || !portada || !pdf) return alert('Completa todos los campos');
+      if (!titulo || !autor || !año || !portada || !pdf) return alert('¡Completa todos los campos obligatorios!');
 
       const readerImg = new FileReader();
       readerImg.onload = () => {
         const readerPdf = new FileReader();
         readerPdf.onload = () => {
           const nuevo = {
-            id: 'lib_' + Date.now(),
+            id: 'lib_' + Date.now() + Math.random().toString(36).substr(2,5),
             titulo, autor, año: parseInt(año), quote, categoria,
             img: readerImg.result,
-            pdf: readerPdf.result
+            pdf: readerPdf.result,
+            fecha: new Date().toLocaleDateString('es-PE')
           };
           libros.unshift(nuevo);
           guardar();
           renderizar();
           document.getElementById('upload-modal').classList.remove('active');
           e.target.reset();
-          alert('¡Libro agregado con éxito!');
+          alert('¡Libro agregado con éxito! 🎉');
         };
         readerPdf.readAsDataURL(pdf);
       };
       readerImg.readAsDataURL(portada);
     };
 
-    // Resto de funciones: favoritos, PDF viewer, tema, menú, etc. (igual que antes)
-    // (Puedo ampliarlo si necesitas todo el JS completo)
+    // === FAVORITOS ===
+    window.toggleFavorito = id => {
+      const idx = favoritos.indexOf(id);
+      if (idx === -1) favoritos.push(id);
+      else favoritos.splice(idx, 1);
+      guardar();
+      renderizar(libros.filter(l => document.querySelector(`[data-section].active`)?.dataset.section === 'all' || l.categoria === document.querySelector(`[data-section].active`)?.dataset.section ? true : false));
+    };
 
-    window.onload = () => renderizar();
+    // === VISOR PDF ===
+    let pdfDoc = null, pageNum = 1, scale = 1.5;
+    window.abrirPDF = url => {
+      pdfjsLib.getDocument(url).promise.then(pdf => {
+        pdfDoc = pdf;
+        document.getElementById('page-count').textContent = pdf.numPages;
+        renderPage(1);
+        document.getElementById('pdf-modal').classList.add('active');
+        lecturas++;
+        guardar();
+        document.getElementById('read-count').textContent = lecturas;
+      });
+    };
+
+    function renderPage(num) {
+      pageNum = num;
+      pdfDoc.getPage(num).then(page => {
+        const viewport = page.getViewport({ scale });
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        page.render({ canvasContext: ctx, viewport }).promise;
+        document.getElementById('page-num').textContent = num;
+      });
+    }
+
+    document.getElementById('prev-page').onclick = () => { if(pageNum > 1) renderPage(pageNum-1); };
+    document.getElementById('next-page').onclick = () => { if(pageNum < pdfDoc.numPages) renderPage(pageNum+1); };
+    document.getElementById('zoom-in').onclick = () => { scale += 0.2; renderPage(pageNum); };
+    document.getElementById('zoom-out').onclick = () => { if(scale > 0.5) { scale -= 0.2; renderPage(pageNum); } };
+
+    // === BÚSQUEDA Y FILTROS ===
+    document.getElementById('global-search').addEventListener('input', filtrar);
+    document.querySelectorAll('[data-section]').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('[data-section]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filtrar();
+      });
+    });
+
+    function filtrar() {
+      const term = document.getElementById('global-search').value.toLowerCase();
+      const cat = document.querySelector('[data-section].active')?.dataset.section || 'all';
+      const filtrados = libros.filter(l => {
+        const matchesSearch = l.titulo.toLowerCase().includes(term) || l.autor.toLowerCase().includes(term) || (l.quote && l.quote.toLowerCase().includes(term));
+        const matchesCat = cat === 'all' || l.categoria === cat;
+        return matchesSearch && matchesCat;
+      });
+      renderizar(filtrados);
+    }
+
+    // === TEMA OSCURO ===
+    const themeToggle = document.getElementById('theme-toggle');
+    if (localStorage.getItem('theme') === 'dark') document.body.dataset.theme = 'dark';
+    themeToggle.onclick = () => {
+      const isDark = document.body.dataset.theme === 'dark';
+      document.body.dataset.theme = isDark ? 'light' : 'dark';
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+      themeToggle.textContent = isDark ? '🌙' : '☀️';
+    };
+
+    // === RESPALDO ===
+    document.getElementById('backup-btn').onclick = () => document.getElementById('backup-modal').classList.add('active');
+
+    window.exportarRespaldo = () => {
+      const data = { libros, favoritos, lecturas, version: 2, fecha: new Date().toISOString() };
+      const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `respaldo-biblioteca-sanluisina-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    };
+
+    window.importarRespaldo = () => {
+      const file = document.getElementById('import-file').files[0];
+      if (!file) return alert('Selecciona un archivo');
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (confirm(`Se cargarán ${data.libros?.length || 0} libros. ¿Continuar?`)) {
+            libros = data.libros || [];
+            favoritos = data.favoritos || [];
+            lecturas = data.lecturas || 0;
+            guardar();
+            renderizar();
+            alert('¡Respaldo restaurado con with éxito!');
+            document.getElementById('backup-modal').classList.remove('active');
+          }
+        } catch(err) {
+          alert('Archivo inválido');
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    // === CIERRES MODALES ===
+    document.querySelectorAll('.close-upload, .close-modal').forEach(btn => {
+      btn.onclick = () => btn.closest('.upload-modal, .modal, .backup-modal').classList.remove('active');
+    });
+    window.onclick = e => {
+      if (e.target.classList.contains('modal') || e.target.classList.contains('upload-modal') || e.target.classList.contains('backup-modal')) {
+        e.target.classList.remove('active');
+      }
+    };
+
+    // === SCROLL TOP Y MENÚ MÓVIL ===
+    window.onscroll = () => {
+      document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 500);
+    };
+    document.getElementById('scrollTop').onclick = () => window.scrollTo({top:0, behavior:'smooth'});
+    document.getElementById('menu-toggle').onclick = () => document.querySelector('.sidebar').classList.toggle('active');
+
+    // INICIO
+    renderizar();
   </script>
 </body>
 </html>
