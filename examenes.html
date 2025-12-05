@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
-    <!-- PDF.js para mostrar la primera página -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -35,7 +34,7 @@
             position: relative;
         }
 
-        /* Menú desplegable con scroll */
+        /* === MENÚ LATERAL === */
         .sidebar {
             position: fixed;
             left: -300px;
@@ -50,95 +49,22 @@
             display: flex;
             flex-direction: column;
         }
-
         .sidebar.active { left: 0; }
-
-        .sidebar-header {
-            padding: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            flex-shrink: 0;
-            text-align: center;
-        }
-
-        .logo {
-            width: 130px;
-            border-radius: 50%;
-            padding: 1rem;
-            background: rgba(251,191,36,0.2);
-            border: 4px solid var(--amarillo);
-            margin: 0 auto 1rem;
-        }
-
+        .sidebar-header { padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; flex-shrink: 0; }
+        .logo { width: 130px; border-radius: 50%; padding: 1rem; background: rgba(251,191,36,0.2); border: 4px solid var(--amarillo); margin: 0 auto 1rem; }
         .sidebar h2 { font-size: 1.9rem; font-weight: 900; color: white; }
+        .nav-container { flex: 1; overflow-y: auto; padding: 1rem 0; }
+        .nav a { display: block; padding: 1.2rem 2rem; color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .nav a:hover { background: rgba(251,191,36,0.2); color: var(--amarillo); padding-left: 2.5rem; }
+        .nav a.volver { margin: 0 2rem 2rem; background: var(--rojo); color: white !important; border-radius: 20px; font-weight: 900; font-size: 1.1rem; padding: 1.4rem; box-shadow: 0 10px 30px rgba(220,38,38,0.5); order: -1; }
+        .nav a.volver:hover { background: #b91c1c; transform: translateY(-4px); }
 
-        .nav-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem 0;
-        }
-
-        .nav a {
-            display: block;
-            padding: 1.2rem 2rem;
-            color: rgba(255,255,255,0.9);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .nav a:hover {
-            background: rgba(251,191,36,0.2);
-            color: var(--amarillo);
-            padding-left: 2.5rem;
-        }
-
-        .nav a.volver {
-            margin: 0 2rem 2rem;
-            background: var(--rojo);
-            color: white !important;
-            border-radius: 20px;
-            font-weight: 900;
-            font-size: 1.1rem;
-            padding: 1.4rem;
-            box-shadow: 0 10px 30px rgba(220,38,38,0.5);
-            order: -1;
-        }
-
-        .nav a.volver:hover {
-            background: #b91c1c;
-            transform: translateY(-4px);
-        }
-
-        .menu-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1001;
-            background: var(--azul-marino);
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 1.8rem;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-        }
-
+        .menu-toggle { position: fixed; top: 20px; left: 20px; z-index: 1001; background: var(--azul-marino); color: white; border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
         .menu-toggle:hover { background: var(--amarillo); color: #000; }
-
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            z-index: 999;
-        }
-
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); opacity: 0; visibility: hidden; transition: all 0.4s; z-index: 999; }
         .overlay.active { opacity: 1; visibility: visible; }
 
+        /* === HERO Y CONTENIDO === */
         .hero {
             min-height: 100vh;
             background: linear-gradient(rgba(15,23,42,0.95), rgba(15,23,42,0.85)),
@@ -150,26 +76,16 @@
             text-align: center;
             padding: 6rem 2rem 4rem;
         }
-
-        .hero h1 {
-            font-size: clamp(3.8rem, 9vw, 8rem);
-            font-weight: 900;
-            color: var(--amarillo);
-            margin-bottom: 1rem;
-        }
-
-        .hero p { font-size: 1.7rem; color:
-        var(--text-light); max-width: 900px; }
+        .hero h1 { font-size: clamp(3.8rem, 9vw, 8rem); font-weight: 900; color: var(--amarillo); margin-bottom: 1rem; }
+        .hero p { font-size: 1.7rem; color: var(--text-light); max-width: 900px; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 4rem 2rem; text-align: center; }
-
         .section-title {
             font-size: 3.2rem;
             font-weight: 900;
             color: var(--amarillo);
             margin: 6rem 0 4rem;
         }
-
         .section-title::after {
             content: '';
             display: block;
@@ -185,9 +101,7 @@
             grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
             gap: 3rem;
             justify-content: center;
-            justify-items: center;
         }
-
         .card {
             width: 100%;
             max-width: 380px;
@@ -195,56 +109,17 @@
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            text-align: center;
             transition: transform 0.4s ease;
         }
-
         .card:hover { transform: translateY(-15px); }
-
-        .card-img-container {
-            width: 100%;
-            height: 220px;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card-img-container canvas {
-            max-width: 100%;
-            max-height: 100%;
-        }
-
+        .card-img-container { width: 100%; height: 220px; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card-img-container canvas { max-width: 100%; max-height: 100%; }
         .card-content { padding: 2rem; }
-
-        .badge {
-            background: var(--azul-marino);
-            color: white;
-            padding: 0.6rem 1.6rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-
+        .badge { background: var(--azul-marino); color: white; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
         .card h3 { font-size: 1.55rem; font-weight: 800; color: white; margin: 1rem 0; }
-
         .card p { color: var(--text-light); margin-bottom: 1.5rem; }
-
         .btns { display: flex; justify-content: center; gap: 1rem; }
-
-        .btn {
-            flex: 1;
-            padding: 1rem;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
+        .btn { flex: 1; padding: 1rem; border-radius: 16px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; }
         .btn-primary { background: var(--azul-marino); color: white; }
         .btn-success { background: var(--amarillo); color: #000; }
         .btn-danger { background: var(--rojo); color: white; }
@@ -260,9 +135,7 @@
             max-width: 900px;
             box-shadow: var(--shadow);
         }
-
         .upload-box h3 { font-size: 2.3rem; font-weight: 900; color: var(--amarillo); }
-
         .btn-upload {
             background: linear-gradient(135deg, var(--azul-marino), var(--amarillo));
             color: white;
@@ -275,9 +148,9 @@
             margin-top: 1.5rem;
             box-shadow: var(--shadow);
         }
-
         .btn-upload:hover { transform: translateY(-6px) scale(1.08); }
 
+        /* === MODAL === */
         .modal {
             position: fixed;
             inset: 0;
@@ -288,7 +161,7 @@
             align-items: center;
             z-index: 9999;
         }
-
+        .modal.active { display: flex; }
         .modal-content {
             background: var(--surface);
             border-radius: var(--radius);
@@ -298,101 +171,17 @@
             text-align: center;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
+            position: relative;
         }
-
-        .modal h3 {
-            font-size: 2.2rem;
-            color: var(--amarillo);
-            margin-bottom: 2rem;
-            font-weight: 800;
-        }
-
-        #examTitle {
-            width: 100%;
-            padding: 1.2rem;
-            border-radius: 16px;
-            border: none;
-            background: #334155;
-            color: white;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        #examTitle::placeholder { color: #94a3b8; }
-
-        .file-input {
-            display: block;
-            background: #fef3c7;
-            border: 3px dashed var(--azul-marino);
-            border-radius: 20px;
-            padding: 2.8rem 2rem;
-            cursor: pointer;
-            margin: 2rem auto;
-            font-weight: 700;
-            color: #000 !important;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            max-width: 420px;
-        }
-
-        .file-input:hover {
-            background: #fde68a;
-            transform: scale(1.02);
-        }
-
-        #fileInfo {
-            color: var(--amarillo);
-            font-weight: 700;
-            margin: 1.5rem 0;
-            font-size: 1.1rem;
-        }
-
-        #uploadBtn {
-            background: linear-gradient(135deg, var(--azul-marino), var(--amarillo));
-            color: white;
-            padding: 1.4rem 4rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: 900;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .progress {
-            height: 16px;
-            background: var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 1.5rem;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--azul-marino), var(--amarillo));
-            width: 0%;
-            transition: width 0.6s ease;
-        }
-
-        .close {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2.8rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
-
-        .empty {
-            text-align: center;
-            padding: 5rem;
-            color: var(--text-light);
-            font-size: 1.4rem;
-        }
+        .close { position: absolute; top: 1rem; right: 1.5rem; font-size: 2.8rem; cursor: pointer; color: var(--text-light); }
+        #examTitle { width: 100%; padding: 1.2rem; border-radius: 16px; border: none; background: #334155; color: white; font-size: 1.1rem; margin-bottom: 2rem; text-align: center; }
+        .file-input { display: block; background: #fef3c7; border: 3px dashed var(--azul-marino); border-radius: 20px; padding: 2.8rem 2rem; cursor: pointer; margin: 2rem auto; font-weight: 700; color: #000; font-size: 1.1rem; max-width: 420px; }
+        .file-input:hover { background: #fde68a; transform: scale(1.02); }
+        #fileInfo { color: var(--amarillo); font-weight: 700; margin: 1.5rem 0; font-size: 1.1rem; }
+        #uploadBtn { width: 100%; margin-top: 1rem; }
+        .progress { height: 16px; background: var(--border); border-radius: 8px; overflow: hidden; margin-top: 1.5rem; display: none; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--azul-marino), var(--amarillo)); width: 0%; transition: width 0.6s ease; }
+        .empty { text-align: center; padding: 5rem; color: var(--text-light); font-size: 1.4rem; }
     </style>
 </head>
 <body>
@@ -400,7 +189,6 @@
     <button class="menu-toggle" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
-
     <div class="overlay" onclick="toggleMenu()"></div>
 
     <aside class="sidebar" id="sidebar">
@@ -410,7 +198,7 @@
         </div>
         <div class="nav-container">
             <nav class="nav">
-                <a href="index.php" class="volver">Volver a Biblioteca</a>
+                <a href="https://tucolegio.edu.pe" class="volver" target="_blank">Volver a Biblioteca</a>
                 <a href="#inicio">Inicio</a>
                 <a href="#area1">Área I</a>
                 <a href="#area2">Área II</a>
@@ -427,70 +215,90 @@
         <p>Comparte y descarga exámenes organizados por áreas • Incluye Concursos Interescolares</p>
     </section>
 
-    <div class="container">
-        <?php 
-        $areas = ['area1','area2','area3','area4','area5','area6'];
-        $nombres = ['Área I','Área II','Área III','Área IV','Área V','Concursos Interescolares'];
-        for($i = 0; $i < 6; $i++): 
-            $area = $areas[$i];
-            $lista = array_filter($examenes, fn($e) => ($e['area'] ?? '') === $area);
-        ?>
-            <h2 class="section-title" id="<?= $area ?>"><?= $nombres[$i] ?></h2>
-            
-            <div class="cards" id="cards<?= $i+1 ?>">
-                <?php if(!empty($lista)): foreach($lista as $examen): ?>
-                    <div class="card" data-id="<?= $examen['id'] ?>">
-                        <div class="card-img-container">
-                            <canvas id="pdf-preview-<?= $examen['id'] ?>"></canvas>
-                        </div>
-                        <div class="card-content">
-                            <div class="badge"><?= $nombres[$i] ?></div>
-                            <h3><?= htmlspecialchars($examen['titulo']) ?></h3>
-                            <p><?= $examen['fecha_subida'] ?></p>
-                            <div class="btns">
-                                <a href="<?= $examen['pdf'] ?>" target="_blank" class="btn btn-primary">Ver</a>
-                                <a href="<?= $examen['pdf'] ?>" download class="btn btn-success">Descargar</a>
-                                <button onclick="eliminarExamen('<?= $examen['id'] ?>', this)" class="btn btn-danger">Eliminar</button>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; else: ?>
-                    <p class="empty">Aún no hay archivos en esta sección</p>
-                <?php endif; ?>
-            </div>
-
-            <div class="upload-box">
-                <h3>¿Tienes archivos de <?= $nombres[$i] ?>?</h3>
-                <p>Sube y ayuda a tus compañeros</p>
-                <button class="btn-upload" onclick="openModal('<?= $area ?>')">SUBIR AHORA</button>
-            </div>
-        <?php endfor; ?>
+    <div class="container" id="app">
+        <!-- Se generará dinámicamente con JavaScript -->
     </div>
 
+    <!-- Modal de subida -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">x</span>
             <h3 id="modalTitle">Subir archivo</h3>
             <input type="text" id="examTitle" placeholder="Ej: Olimpiada Matemática 2025">
-            <label class="file-input" for="fileInput">
-                Máximo 140MB • Solo PDF
-            </label>
+            <label class="file-input" for="fileInput">Máximo 140MB • Solo PDF</label>
             <input type="file" id="fileInput" accept=".pdf" style="display:none;">
             <div id="fileInfo"></div>
             <button id="uploadBtn" class="btn-upload">SUBIR ARCHIVO</button>
-            <div class="progress" id="progress">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
+            <div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
         </div>
     </div>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.querySelector('.overlay').classList.toggle('active');
-        }
+        // Base de datos local simple (usa localStorage)
+        const DB_NAME = 'examenesDB';
+        let examenes = JSON.parse(localStorage.getItem(DB_NAME)) || [];
+
+        const areas = ['area1','area2','area3','area4','area5','area6'];
+        const nombres = ['Área I','Área II','Área III','Área IV','Área V','Concursos Interescolares'];
 
         let currentArea = '';
+
+        // Guardar en localStorage
+        function guardar() {
+            localStorage.setItem(DB_NAME, JSON.stringify(examenes));
+        }
+
+        // Renderizar todas las secciones
+        function render() {
+            const container = document.getElementById('app');
+            container.innerHTML = '';
+
+            areas.forEach((area, i) => {
+                const lista = examenes.filter(e => e.area === area);
+
+                const section = document.createElement('div');
+                section.innerHTML = `
+                    <h2 class="section-title" id="${area}">${nombres[i]}</h2>
+                    <div class="cards" id="cards${i+1}">
+                        ${lista.length ? lista.map(ex => `
+                            <div class="card" data-id="${ex.id}">
+                                <div class="card-img-container">
+                                    <canvas id="pdf-preview-${ex.id}"></canvas>
+                                </div>
+                                <div class="card-content">
+                                    <div class="badge">${nombres[i]}</div>
+                                    <h3>${ex.titulo}</h3>
+                                    <p>${ex.fecha}</p>
+                                    <div class="btns">
+                                        <a href="${ex.url}" target="_blank" class="btn btn-primary">Ver</a>
+                                        <a href="${ex.url}" download="${ex.titulo}.pdf" class="btn btn-success">Descargar</a>
+                                        <button onclick="eliminar('${ex.id}', this)" class="btn btn-danger">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('') : '<p class="empty">Aún no hay archivos en esta sección</p>'}
+                    </div>
+                    <div class="upload-box">
+                        <h3>¿Tienes archivos de ${nombres[i]}?</h3>
+                        <p>Sube y ayuda a tus compañeros</p>
+                        <button class="btn-upload" onclick="openModal('${area}')">SUBIR AHORA</button>
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+
+            // Renderizar vistas previas
+            setTimeout(() => {
+                document.querySelectorAll('canvas[id^="pdf-preview-"]').forEach(canvas => {
+                    const id = canvas.id.split('-')[2];
+                    const ex = examenes.find(e => e.id === id);
+                    if (ex) renderPDF(ex.url, canvas);
+                });
+            }, 100);
+
+            gsap.from('.card', { y: 70, opacity: 0, stagger: 0.12, duration: 0.8, ease: "back.out(1.5)" });
+        }
+
         function openModal(area) {
             currentArea = area;
             const nombre = area === 'area6' ? 'Concursos Interescolares' : 'Área ' + area.replace('area','');
@@ -499,10 +307,14 @@
             document.getElementById('fileInput').value = '';
             document.getElementById('fileInfo').textContent = '';
             document.getElementById('progress').style.display = 'none';
-            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('modal').classList.add('active');
         }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Vista previa del archivo seleccionado
         document.getElementById('fileInput').addEventListener('change', e => {
             const file = e.target.files[0];
             if (file) {
@@ -511,70 +323,71 @@
             }
         });
 
+        // Subir archivo
         document.getElementById('uploadBtn').addEventListener('click', () => {
-            const title = document.getElementById('examTitle').value.trim();
+            const titulo = document.getElementById('examTitle').value.trim();
             const file = document.getElementById('fileInput').files[0];
-            if (!title || !file || file.size > 140*1024*1024) {
-                alert('Completa todos los campos correctamente');
+
+            if (!titulo || !file || file.size > 140*1024*1024 || file.type !== 'application/pdf') {
+                alert('Completa título y selecciona un PDF válido (máx 140 MB)');
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('pdf_file', file);
-            formData.append('titulo', title);
-            formData.append('area', currentArea);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const nuevo = {
+                    id: 'exam_' + Date.now() + '_' + Math.random().toString(36).substr(2,9),
+                    titulo: titulo,
+                    url: e.target.result,
+                    area: currentArea,
+                    fecha: new Date().toLocaleDateString('es-ES') + ' ' + new Date().toLocaleTimeString('es-ES', {hour: '2-digit', minute: '2-digit'})
+                };
 
-            const btn = document.getElementById('uploadBtn');
-            btn.disabled = true; btn.textContent = 'Subiendo...';
-            document.getElementById('progress').style.display = 'block';
-            document.getElementById('progressBar').style.width = '80%';
-
-            fetch('', { method: 'POST', body: formData })
-            .then(r => r.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                }
-            })
-            .finally(() => {
-                btn.disabled = false; btn.textContent = 'SUBIR ARCHIVO';
-                document.getElementById('progress').style.display = 'none';
-                document.getElementById('progressBar').style.width = '0%';
-            });
+                examenes.unshift(nuevo);
+                guardar();
+                render();
+                closeModal();
+                alert('¡Examen subido con éxito!');
+            };
+            reader.readAsDataURL(file);
         });
 
-        function eliminarExamen(id, btn) {
-            if (!confirm('¿Eliminar permanentemente?')) return;
+        // Eliminar
+        function eliminar(id, btn) {
+            if (!confirm('¿Eliminar este examen permanentemente?')) return;
+            examenes = examenes.filter(e => e.id !== id);
+            guardar();
             const card = btn.closest('.card');
-            fetch('', { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: 'eliminar=1&id='+id })
-            .then(r => r.json())
-            .then(d => { if (d.success) gsap.to(card, { y: -60, opacity: 0, duration: 0.6, onComplete:()=>card.remove() }); });
+            gsap.to(card, { y: -60, opacity: 0, duration: 0.6, onComplete: () => card.remove() });
         }
 
-        // Renderizar vista previa del PDF
-        function renderPDF(url, canvas) {
-            pdfjsLib.getDocument(url).promise.then(pdf => {
+        // Renderizar PDF en canvas
+        function renderPDF(dataUrl, canvas) {
+            pdfjsLib.getDocument(dataUrl).promise.then(pdf => {
                 pdf.getPage(1).then(page => {
                     const viewport = page.getViewport({ scale: 1.5 });
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
-                    page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
+                    page.render({ canvasContext: canvas.getContext('2d'), viewport });
                 });
             }).catch(() => {
-                canvas.parentElement.innerHTML = '<div style="color:#666;padding:2rem;">Vista previa no disponible</div>';
+                canvas.parentElement.innerHTML = '<div style="color:#666;padding:2rem;font-size:0.9rem;">Vista previa no disponible</div>';
             });
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('canvas[id^="pdf-preview-"]').forEach(canvas => {
-                const card = canvas.closest('.card');
-                const pdfUrl = card.querySelector('a[href$=".pdf"]').href;
-                renderPDF(pdfUrl, canvas);
-            });
-            gsap.from('.card', { y: 70, opacity: 0, stagger: 0.12, duration: 0.8, ease: "back.out(1.5)" });
-        });
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+        }
 
-        window.addEventListener('click', e => { if (e.target === document.getElementById('modal')) closeModal(); });
+        // Cargar al inicio
+        window.onload = () => {
+            render();
+        };
+
+        window.addEventListener('click', e => {
+            if (e.target === document.getElementById('modal')) closeModal();
+        });
     </script>
 </body>
 </html>
