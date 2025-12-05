@@ -1,0 +1,192 @@
+{
+  "publicaciones_wol": [
+    {
+      "id": "wol-1",
+      "titulo": "La Biblia: Traducción del Nuevo Mundo",
+      "autor": "Watch Tower Bible and Tract Society",
+      "año": "2019",
+      "desc": "La Biblia completa en español moderno.",
+      "pdf": "https://akamd1.jw-cdn.org/sg2/p/9ca04ce/4/o/nwt_S.pdf",
+      "quote": "‘Toda Escritura es inspirada por Dios’ — 2 Timoteo 3:16",
+      "img": "https://www.dafont.com/forum/attach/orig/8/9/898676.png?1"
+    },
+    {
+      "id": "wol-2",
+      "titulo": "Qué enseña realmente la Biblia",
+      "autor": "Watch Tower Bible and Tract Society",
+      "año": "2005",
+      "desc": "Respuestas claras a preguntas vitales.",
+      "pdf": "https://akamd1.jw-cdn.org/sg2/p/d4f48d0/1/o/bh_S.pdf",
+      "quote": "‘Conoceréis la verdad, y la verdad os hará libres’ — Juan 8:32",
+      "img": "https://http2.mlstatic.com/D_NQ_NP_797269-MLV88361425874_072025-O.webp"
+    },
+    {
+      "id": "wol-3",
+      "titulo": "Perspicacia para comprender las Escrituras (Vol. 1)",
+      "autor": "Watch Tower Bible and Tract Society",
+      "año": "1988",
+      "desc": "Enciclopedia bíblica de referencia.",
+      "pdf": "https://akamd1.jw-cdn.org/sg2/p/1c82862/4/o/it-2_S.pdf",
+      "quote": "‘Examínenlo todo con cuidado’ — 1 Tesalonicenses 5:21",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ3EGarPwvv0EpDx5pJo5qsghmZ5ZYTrGfHxjWyD5zbmUJpww22hUu5AAK2mBzis1r7Sc&usqp=CAU"
+    },
+    {
+      "id": "wol-4",
+      "titulo": "Acérquese a Jehová",
+      "autor": "Watch Tower Bible and Tract Society",
+      "año": "2007",
+      "desc": "Cómo tener una relación cercana con Dios.",
+      "pdf": "https://akamd1.jw-cdn.org/sg2/p/93fcf8/1/o/w_S_20140815.pdf",
+      "quote": "‘Acérquense a Dios, y él se acercará a ustedes’ — Santiago 4:8",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSotm8MY8YlVVgdHYOWQKAxLijOsZJIKj9wdA&s"
+    },
+    {
+      "id": "wol-5",
+      "titulo": "El mayor hombre que jamás vivió",
+      "autor": "Watch Tower Bible and Tract Society",
+      "año": "1991",
+      "desc": "La vida de Jesucristo en detalle.",
+      "pdf": "https://akamd1.jw-cdn.org/sg2/p/a51d8c/8/o/jy_S.pdf",
+      "quote": "‘Yo soy el camino, y la verdad, y la vida’ — Juan 14:6",
+      "img": "https://cms-imgp.jw-cdn.org/img/p/1102014719/univ/art/1102014719_univ_lsr_lg.jpg"
+    }
+  ],
+  "literatura_peruana": [
+    {
+      "id": "peru-1",
+      "titulo": "Comentarios reales de los incas",
+      "autor": "Inca Garcilaso de la Vega",
+      "año": "1609",
+      "desc": "Crónica mestiza del Tahuantinsuyo.",
+      "pdf": "https://biblioteca-repositorio.clacso.edu.ar/bitstream/CLACSO/15293/1/Comentarios_reales_1_Inca_Garcilaso_de_la_Vega.pdf",
+      "quote": "‘Yo, que soy indio’",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqULpTUUDuqoyDKAMFrcHWNVWhBb2nYB3zL2jDMXzAygl10G8tRRfPutmPR4p7-v8nEnU&usqp=CAU"
+    },
+    {
+      "id": "peru-2",
+      "titulo": "Tradiciones peruanas",
+      "autor": "Ricardo Palma",
+      "año": "1893",
+      "desc": "Anecdotario histórico y costumbrista.",
+      "pdf": "https://pruebat.org/Home/libro/pdf/Tradiciones-Peruanas-I.pdf",
+      "quote": "‘La tradición es la novela del pueblo’",
+      "img": "https://libreria.apl.org.pe/wp-content/uploads/2022/06/Caratula-EDICION-CRITICA-Segunda_page-0001.jpg"
+    },
+    {
+      "id": "peru-3",
+      "titulo": "Los heraldos negros",
+      "autor": "César Vallejo",
+      "año": "1918",
+      "desc": "Primer poemario vanguardista peruano.",
+      "pdf": "https://fundacionbbva.pe/wp-content/uploads/2018/05/libro_000007.pdf",
+      "quote": "‘Hay golpes en la vida, tan fuertes... ¡Yo no sé!’",
+      "img": "https://udocz-cdn-hop.b-cdn.net/documents_html/562866-8bc1d4722727440fb53da9248fe5e0d3/bg1.jpg"
+    },
+    {
+      "id": "peru-4",
+      "titulo": "Trilce",
+      "autor": "César Vallejo",
+      "año": "1922",
+      "desc": "Poesía experimental y revolucionaria.",
+      "pdf": "https://fundacionbbva.pe/wp-content/uploads/2016/04/libro_000044.pdf",
+      "quote": "‘Trilce: la palabra que siente’",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAv4wR1_BcZOrFrZs572rJMaLrDmFAMgs7YA&s"
+    },
+    {
+      "id": "peru-5",
+      "titulo": "Aves sin nido",
+      "autor": "Clorinda Matto de Turner",
+      "año": "1889",
+      "desc": "Novela indigenista fundacional.",
+      "pdf": "https://ibero2umich.files.wordpress.com/2011/11/clorinda-matto-de-turner-aves-sin-nido.pdf",
+      "quote": "‘El indio no es esclavo’",
+      "img": "https://m.media-amazon.com/images/I/71kRMzKPQ-L._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      "id": "peru-6",
+      "titulo": "Siete ensayos de interpretación de la realidad peruana",
+      "autor": "José Carlos Mariátegui",
+      "año": "1928",
+      "desc": "Análisis marxista del Perú.",
+      "pdf": "https://centroderecursos.cultura.pe/sites/default/files/rb/pdf/mariategui_7_ensayos.pdf",
+      "quote": "‘El problema del indio’",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2KDRCzf_ipJdltBa5ylNKI3ptHxIrYOxf1Q&s"
+    }
+  ],
+  "literatura_huanuqueña": [
+    {
+      "id": "huanuco-1",
+      "titulo": "Epístola de Amarilis a Belardo",
+      "autor": "Amarilis",
+      "año": "1621",
+      "desc": "Primera poeta peruana conocida.",
+      "pdf": "https://www.redalyc.org/articulo.oa?id=517551448005",
+      "quote": "‘Amor, dulce tirano’",
+      "img": "https://i.ytimg.com/vi/BQypbxBwUYU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCbNtdbJ0Syo-tBr6u0K5ZoTWG2pA"
+    },
+    {
+      "id": "huanuco-2",
+      "titulo": "Indios y venados",
+      "autor": "Justiniano López",
+      "año": "1927",
+      "desc": "Novela indigenista huanuqueña.",
+      "pdf": "https://docs.enriquedussel.com/txt/Textos_200_Obras/Filosofias_pueblos_originarios/Indios_Peru-Juan_Ossio.pdf",
+      "quote": "‘La tierra grita’",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcMJVINJkFmnFS1nSv1thIWALsZtBRd-fvPQ&s"
+    }
+  ],
+  "creencias_peruanas": [
+    {
+      "id": "creencias-peru-1",
+      "titulo": "Mitos y Leyendas del Perú",
+      "autor": "Varios (folklore)",
+      "año": "Recopilación",
+      "desc": "Mitos andinos, costeños y amazónicos.",
+      "pdf": "https://www.folkloretradiciones.com.ar/folklorecientifico/documentos/AMARU.pdf",
+      "quote": "‘El Amaru despierta cuando la tierra tiembla’",
+      "img": "https://i.ytimg.com/vi/ZeXBgXg0Bh8/sddefault.jpg"
+    },
+    {
+      "id": "creencias-peru-2",
+      "titulo": "El culto a la Pachamama",
+      "autor": "Tradición andina",
+      "año": "Ancestral",
+      "desc": "Ofrendas y rituales a la Madre Tierra.",
+      "pdf": "https://digitalrepository.unm.edu/cgi/viewcontent.cgi?article=1113&context=abya_yala",
+      "quote": "‘La tierra no pertenece al hombre’",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPE4y2PsJHgXhdUUtmHO_y8Xl7FmK8H-Ek3tA5wnsw4U4qARGlsvt5lE9IXxXnd2wyCFA&usqp=CAU"
+    },
+    {
+      "id": "creencias-peru-3",
+      "titulo": "El Señor de Sipán",
+      "autor": "Cultura Moche",
+      "año": "200-700 d.C.",
+      "desc": "Dios guerrero y ritual funerario.",
+      "pdf": "https://www.marqalicante.com/contenido/genericas/Sipan.pdf",
+      "quote": "‘El oro es para los dioses’",
+      "img": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/VWFWYX54QZHVPH2422BCBZXYCU.jpg"
+    }
+  ],
+  "creencias_huanuqueñas": [
+    {
+      "id": "creencias-huanuco-1",
+      "titulo": "Leyenda de Acococha y Urwawanka",
+      "autor": "Tradición oral",
+      "año": "Ancestral",
+      "desc": "Lago sagrado y diosa protectora.",
+      "pdf": "https://manuelnievesobras.wordpress.com/libros-del-autor-manuel-l-nieves-fabian/",
+      "quote": "‘El agua guarda los secretos del cielo’",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrpUkFkJvLEotsOi_FcZG3xkrYo_eMnrssRg&s  "
+    },
+    {
+      "id": "creencias-huanuco-2",
+      "titulo": "El Dios Tutelar de Kotosh",
+      "autor": "Cultura Kotosh",
+      "año": "1800 a.C.",
+      "desc": "Templo de las Manos Cruzadas.",
+      "pdf": "https://biblioteca.ciencialatina.org/wp-content/uploads/2023/05/Kotosh-Mito.pdf",
+      "quote": "‘Las manos cruzadas son la puerta al más allá’",
+      "img": "https://www.caminoincamachu.com/wp-content/uploads/2024/02/Kotosh-Exhibicion-De-Las-Manos-Cruzadas-Peru.jpg"
+    }
+  ]
+}
