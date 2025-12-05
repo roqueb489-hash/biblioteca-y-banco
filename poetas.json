@@ -1,0 +1,26 @@
+[
+    {
+        "id": "69320fae92483",
+        "titulo": "AREA 3 TIPO R-2024",
+        "pdf": "uploads\/examen_69320fae91a82_1764888494.pdf",
+        "area": "area3",
+        "img": "https:\/\/images.unsplash.com\/photo-1507842217343-583bb7270b66?w=400",
+        "fecha_subida": "04\/12\/2025 23:48"
+    },
+    {
+        "id": "69320f77a5a2b",
+        "titulo": "AREA 2 TIPO S-2024",
+        "pdf": "uploads\/examen_69320f77a557d_1764888439.pdf",
+        "area": "area2",
+        "img": "https:\/\/images.unsplash.com\/photo-1507842217343-583bb7270b66?w=400",
+        "fecha_subida": "04\/12\/2025 23:47"
+    },
+    {
+        "id": "69320c0d8198f",
+        "titulo": "AREA 1 TIPO S-2024",
+        "pdf": "uploads\/examen_69320c0d8058f_1764887565.pdf",
+        "area": "area1",
+        "img": "https:\/\/images.unsplash.com\/photo-1507842217343-583bb7270b66?w=400",
+        "fecha_subida": "04\/12\/2025 23:32"
+    }
+]
