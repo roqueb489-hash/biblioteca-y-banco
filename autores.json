@@ -1,0 +1,24 @@
+{
+  "César Vallejo": {
+    "nombre": "César Abraham Vallejo Mendoza",
+    "nacimiento": "1892",
+    "fallecimiento": "1938",
+    "nacionalidad": "Perú",
+    "bio": "Poeta vanguardista, autor de Los heraldos negros y Trilce.",
+    "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/C%C3%A9sar_Vallejo_1929.jpg/800px-C%C3%A9sar_Vallejo_1929.jpg"
+  },
+  "Mario Vargas Llosa": {
+    "nombre": "Jorge Mario Vargas Llosa",
+    "nacimiento": "1936",
+    "nacionalidad": "Perú/España",
+    "bio": "Premio Nobel de Literatura 2010.",
+    "foto": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Mario_Vargas_Llosa_2010.jpg/800px-Mario_Vargas_Llosa_2010.jpg"
+  },
+  "Watch Tower Bible and Tract Society": {
+    "nombre": "Watch Tower Bible and Tract Society",
+    "fundacion": "1881",
+    "tipo": "Organización religiosa",
+    "bio": "Editora de publicaciones de los Testigos de Jehová.",
+    "foto": "https://assetsnffrgf-a.akamaihd.net/assets/m/1102005061/univ/art/1102005061_univ_lsr_lg.jpg"
+  }
+}
