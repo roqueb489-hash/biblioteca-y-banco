@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Lista de Tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #5a67d8;
+        }
+        .input-area {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #nuevaTarea {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px 0 0 8px;
+            outline: none;
+        }
+        #nuevaTarea:focus {
+            border-color: #667eea;
+        }
+        button {
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 0 8px 8px 0;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #5a67d8;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        li.completada {
+            background: #d4edda;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .acciones button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .eliminar { color: #e53e3e; }
+        .eliminar:hover { color: #c53030; }
+        .contador {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Lista de Tareas</h1>
+        
+        <div class="input-area">
+            <input type="text" id="nuevaTarea" placeholder="Escribe una nueva tarea..." autocomplete="off">
+            <button id="agregarBtn">➕ Agregar</button>
+        </div>
+
+        <ul id="listaTareas"></ul>
+
+        <div class="contador">
+            Tareas pendientes: <span id="pendientes">0</span>
+        </div>
+    </div>
+
+    <script>
+        // Elementos del DOM
+        const inputTarea = document.getElementById('nuevaTarea');
+        const btnAgregar = document.getElementById('agregarBtn');
+        const listaTareas = document.getElementById('listaTareas');
+        const contadorPendientes = document.getElementById('pendientes');
+
+        // Cargar tareas guardadas al iniciar
+        cargarTareas();
+
+        // Evento para agregar tarea con el botón
+        btnAgregar.addEventListener('click', agregarTarea);
+
+        // Evento para agregar tarea presionando Enter
+        inputTarea.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                agregarTarea();
+            }
+        });
+
+        // Función principal para agregar tarea
+        function agregarTarea() {
+            const texto = inputTarea.value.trim();
+            if (texto === '') {
+                alert('Por favor escribe una tarea');
+                return;
+            }
+
+            const tarea = {
+                id: Date.now(),
+                texto: texto,
+                completada: false
+            };
+
+            // Agregar al DOM
+            crearElementoTarea(tarea);
+
+            // Guardar en localStorage
+            guardarTarea(tarea);
+
+            // Limpiar input
+            inputTarea.value = '';
+            actualizarContador();
+        }
+
+        // Crear el <li> con botones
+        function crearElementoTarea(tarea) {
+            const li = document.createElement('li');
+            li.dataset.id = tarea.id;
+            if (tarea.completada) li.classList.add('completada');
+
+            li.innerHTML = `
+                <span onclick="toggleCompletada(${tarea.id})">
+                    ${tarea.texto}
+                </span>
+                <div class="acciones">
+                    <button onclick="toggleCompletada(${tarea.id})" title="Marcar como completada">
+                        ✅
+                    </button>
+                    <button class="eliminar" onclick="eliminarTarea(${tarea.id})" title="Eliminar">
+                        🗑️
+                    </button>
+                </div>
+            `;
+
+            listaTareas.appendChild(li);
+        }
+
+        // Marcar/desmarcar como completada
+        function toggleCompletada(id) {
+            const tareas = obtenerTareas();
+            const tarea = tareas.find(t => t.id === id);
+            if (tarea) {
+                tarea.completada = !tarea.completada;
+                guardarTodasTareas(tareas);
+                actualizarLista();
+            }
+        }
+
+        // Eliminar tarea
+        function eliminarTarea(id) {
+            if (confirm('¿Seguro que quieres eliminar esta tarea?')) {
+                let tareas = obtenerTareas();
+                tareas = tareas.filter(t => t.id !== id);
+                guardarTodasTareas(tareas);
+                actualizarLista();
+            }
+        }
+
+        // Actualizar contador de pendientes
+        function actualizarContador() {
+            const tareas = obtenerTareas();
+            const pendientes = tareas.filter(t => !t.completada).length;
+            contadorPendientes.textContent = pendientes;
+        }
+
+        // Refrescar toda la lista
+        function actualizarLista() {
+            listaTareas.innerHTML = '';
+            const tareas = obtenerTareas();
+            tareas.forEach(tarea => crearElementoTarea(tarea));
+            actualizarContador();
+        }
+
+        // === LocalStorage ===
+        function guardarTarea(tarea) {
+            const tareas = obtenerTareas();
+            tareas.push(tarea);
+            localStorage.setItem('tareas', JSON.stringify(tareas));
+        }
+
+        function guardarTodasTareas(tareas) {
+            localStorage.setItem('tareas', JSON.stringify(tareasias));
+        }
+
+        function obtenerTareas() {
+            const datos = localStorage.getItem('tareas');
+            return datos ? JSON.parse(datos) : [];
+        }
+
+        function cargarTareas() {
+            const tareas = obtenerTareas();
+            tareas.forEach(tarea => crearElementoTarea(tarea));
+            actualizarContador();
+        }
+    </script>
+</body>
+</html>
